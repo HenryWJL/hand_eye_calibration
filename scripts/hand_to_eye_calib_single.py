@@ -58,7 +58,7 @@ if __name__ == '__main__':
     End-pose data and target-pose data are obtained from topics '/robot_driver/tool_point' 
     and '/tf', respectively. 
     """
-    rospy.init_node('hand_to_eye_calib', anonymous=True)
+    rospy.init_node('hand_to_eye_calib_single', anonymous=True)
     rospy.Subscriber('/robot_driver/tool_point', TwistStamped, end_pose_callback, queue_size=10)
     rospy.Subscriber('/tf', TFMessage, target_pose_callback, queue_size=10)
 

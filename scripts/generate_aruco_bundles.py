@@ -12,11 +12,11 @@ markersX = 5  # The number of markers in each row
 markersY = 7  # The number of markers in each column
 markerLength = 0.04  # The length of each marker (in meters)
 markerSeparation = 0.01  # The separation between any two markers (in meters)
-aruco_dictionary = "DICT_4X4_100"  # The dictionary that the markers belong to
+arucoDictionary = "DICT_4X4_100"  # The dictionary that the markers belong to
 
 
 def generate_bundles():
-    dictionary = cv2.aruco.Dictionary_get(ARUCO_DICTIONARY[aruco_dictionary])
+    dictionary = cv2.aruco.Dictionary_get(ARUCO_DICTIONARY[arucoDictionary])
     board = cv2.aruco.GridBoard_create(markersX, markersY, markerLength, markerSeparation, dictionary)
     width = int(markersX * (markerLength + markerSeparation) * 10000)  # The width of the image (in pixels)
     height = int(markersY * (markerLength + markerSeparation) * 10000)  # The height of the image (in pixels)

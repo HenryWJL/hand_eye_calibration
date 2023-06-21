@@ -83,7 +83,7 @@ if __name__ == '__main__':
     Target-pose data are obtained from topic '/tf' while end-pose data are
     obtained from a function. 
     """
-    rospy.init_node('automatic_hand_to_eye_calib', anonymous=True)
+    rospy.init_node('automatic_hand_to_eye_calib_single', anonymous=True)
     rospy.Subscriber('/tf', TFMessage, callback, queue_size=10)
 
     robot = jkrc.RC("192.168.200.100")

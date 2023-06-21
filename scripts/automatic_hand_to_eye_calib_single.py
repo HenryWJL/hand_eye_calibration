@@ -136,8 +136,7 @@ if __name__ == '__main__':
                 cam2base_quaternions = np.concatenate((T_cam2base.reshape(3),
                                                        R_cam2base_quaternions.reshape(4)), axis=0)
                 print(cam2base_quaternions.tolist())  # Quaternions
-                with open('./jaka_ws/src/jaka_grasping/handeye_calibration/yaml/camera_to_base_matrix_apriltag.yaml',
-                          'w', encoding='utf-8') as f:
+                with open('../yaml/camera_to_base_matrix_apriltag.yaml', 'w', encoding='utf-8') as f:
                     yaml.dump(data=cam2base.tolist(), stream=f)
                 robot.logout()
                 break

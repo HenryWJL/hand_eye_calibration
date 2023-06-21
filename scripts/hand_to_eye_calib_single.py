@@ -117,10 +117,7 @@ if __name__ == '__main__':
                     rospy.logwarn("No result to save!")
 
                 else:
-                    # Modify the following file saving path to your own
-                    with open(
-                            './jaka_ws/src/jaka_grasping/handeye_calibration/yaml/camera_to_base_matrix_apriltag.yaml',
-                            'w', encoding='utf-8') as f:
+                    with open('../yaml/camera_to_base_matrix_apriltag.yaml', 'w', encoding='utf-8') as f:
                         yaml.dump(data=cam2base.tolist(), stream=f)
                     break
 

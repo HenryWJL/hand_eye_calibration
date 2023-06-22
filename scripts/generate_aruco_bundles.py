@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-This is used for generating self-customized ArUco bundles.
+This is used for generating self-customized ArUco boards.
 """
 
 import cv2
@@ -19,10 +19,35 @@ def generate_bundles():
 
 
 if __name__ == '__main__':
+    # Parameters
     markersX = 5  # The number of markers in each row
     markersY = 7  # The number of markers in each column
     markerLength = 0.04  # The length of each marker (in meters)
     markerSeparation = 0.01  # The separation between any two markers (in meters)
     arucoDictionary = "DICT_4X4_100"  # The dictionary that the markers belong to
+    """
+    Available Dictionaries:
+    "DICT_ARUCO_ORIGINAL"
+    "DICT_4X4_50"
+    "DICT_4X4_100"
+    "DICT_4X4_250"
+    "DICT_4X4_1000"
+    "DICT_5X5_50"
+    "DICT_5X5_100"
+    "DICT_5X5_250"
+    "DICT_5X5_1000"
+    "DICT_6X6_50"
+    "DICT_6X6_100"
+    "DICT_6X6_250"
+    "DICT_6X6_1000"
+    "DICT_7X7_50"
+    "DICT_7X7_100"
+    "DICT_7X7_250"
+    "DICT_7X7_1000"
+    "DICT_APRILTAG_16h5"
+    "DICT_APRILTAG_25h9"
+    "DICT_APRILTAG_36h10"
+    "DICT_APRILTAG_36h11"
+    """
 
     generate_bundles()

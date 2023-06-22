@@ -6,13 +6,7 @@ This is used for generating self-customized ArUco bundles.
 """
 
 import cv2
-from utils import ARUCO_DICTIONARY
-
-markersX = 5  # The number of markers in each row
-markersY = 7  # The number of markers in each column
-markerLength = 0.04  # The length of each marker (in meters)
-markerSeparation = 0.01  # The separation between any two markers (in meters)
-arucoDictionary = "DICT_4X4_100"  # The dictionary that the markers belong to
+from aruco_utils import ARUCO_DICTIONARY
 
 
 def generate_bundles():
@@ -25,4 +19,10 @@ def generate_bundles():
 
 
 if __name__ == '__main__':
+    markersX = 5  # The number of markers in each row
+    markersY = 7  # The number of markers in each column
+    markerLength = 0.04  # The length of each marker (in meters)
+    markerSeparation = 0.01  # The separation between any two markers (in meters)
+    arucoDictionary = "DICT_4X4_100"  # The dictionary that the markers belong to
+
     generate_bundles()

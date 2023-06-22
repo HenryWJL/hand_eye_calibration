@@ -15,9 +15,6 @@ from tf2_msgs.msg import TFMessage
 import time
 import yaml
 
-end_pose = None  # The pose of robot's end
-target_pose = None  # The pose of ArUco target
-
 
 def get_end2base_mat(pose):
     # Calculate the gripper-to-base transformation matrix
@@ -62,12 +59,16 @@ if __name__ == '__main__':
     rospy.Subscriber('/robot_driver/tool_point', TwistStamped, end_pose_callback, queue_size=10)
     rospy.Subscriber('/tf', TFMessage, target_pose_callback, queue_size=10)
 
+    end_pose = None  # The pose of robot's end
+    target_pose = None  # The pose of ArUco target
+    cam2base = None
     R_end2base_samples = []
     T_end2base_samples = []
     R_target2cam_samples = []
     T_target2cam_samples = []
     sample_number = 0
-    cam2base = None
+
+    rospy.sleep(1)
 
     while not rospy.is_shutdown():
         try:

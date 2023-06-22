@@ -97,6 +97,8 @@ if __name__ == '__main__':
     sample_number = 0
     cam2base = None
 
+    rospy.sleep(1)
+
     while not rospy.is_shutdown():
         try:
             ret = robot.joint_move(joint_position[sample_number, :].tolist(), 0, True, 2)

@@ -11,30 +11,24 @@ This package supports a variety of calibration targets, including checkerboard, 
 - [Single AprilTag marker](https://github.com/AprilRobotics/apriltag-imgs)
 
 ### Step 2: Modify the arguments in the launch files
-- `/launch/aruco_single.launch`
-```launch
-<launch>
-
-    <arg name="image_topic"     default="/camera/color/image_raw"/>
-    <arg name="camera_info"     default="/camera/color/camera_info"/> 
-    <arg name="markerId"        default="250"/>
-    <arg name="markerSize"      default="0.04"/>
-    ...
-</launch>
-```
+Please follow the instructions in the launch files and modify the arguments. 
 
 ### Step 3: Start the camera node
 ```bash
 roslaunch realsense2_camera rs_camera.launch
 ```
 ### Step 4: Start the pose estimation node
-- ArUco
+- Single ArUco marker
 ```bash
-roslaunch hand_eye_calibration aruco_single_start.launch
+roslaunch hand_eye_calibration aruco_single.launch
+```
+- ArUco bundles
+```bash
+roslaunch hand_eye_calibration aruco_bundle.launch
 ```
 - AprilTag
 ```bash
-roslaunch hand_eye_calibration apriltag_single_start.launch
+roslaunch hand_eye_calibration apriltag_single.launch
 ```
 ### Step 5: Start the robot node
 ```bash

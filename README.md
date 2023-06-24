@@ -4,9 +4,11 @@ This package is used for hand-eye calibration. **Intel Realsense D455** camera a
 
 ## Usage Instruction
 
-#### Step 1: Print an ArUco target
-- [ArUco](https://chev.me/arucogen/)
-- **Attention**: When you enter the download interface, please choose 'Original ArUco' dictionary. 
+#### Step 1: Print a calibration target
+This package supports a variety of calibration targets, including checkerboard, single ArUco marker, ArUco bundles, single AprilTag marker and AprilTag bundles. Before using this package, please generate and print a calibration target.
+- [Single ArUco marker](https://chev.me/arucogen/) **Attention**: When you enter the download interface, please choose 'Original ArUco' dictionary.
+- ArUco bundles
+- [Single AprilTag marker](https://github.com/AprilRobotics/apriltag-imgs)
 
 #### Step 2: Modify the values of the following arguments in the `/launch/aruco_single_start.launch`
 ```launch

@@ -20,15 +20,19 @@ roslaunch realsense2_camera rs_camera.launch
 ### Step 4: Start pose estimation
 - Single ArUco marker
 ```bash
-roslaunch hand_eye_calibration aruco_single.launch
+roslaunch hand_eye_calibration aruco_single_start.launch
 ```
 - ArUco bundles
 ```bash
-roslaunch hand_eye_calibration aruco_bundle.launch
+roslaunch hand_eye_calibration aruco_bundle_start.launch
 ```
-- AprilTag
+- Single AprilTag marker
 ```bash
-roslaunch hand_eye_calibration apriltag.launch
+roslaunch hand_eye_calibration apriltag_single_start.launch
+```
+- AprilTag bundles
+```bash
+roslaunch hand_eye_calibration apriltag_bundle_start.launch
 ```
 ### Step 5: Start the robot
 ```bash

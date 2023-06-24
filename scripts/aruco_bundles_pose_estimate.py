@@ -11,6 +11,7 @@ import cv2
 import rospy
 import time
 from sensor_msgs.msg import CameraInfo, Image
+from tf2_msgs.msg import TFMessage
 from cv_bridge import CvBridge
 
 
@@ -63,14 +64,14 @@ if __name__ == '__main__':
     markerSeparation = rospy.get_param("/marker_separation", default=0.01)  # The separation between any two markers
     arucoDictionary = rospy.get_param("/aruco_dictionary", default=cv2.aruco.DICT_4X4_100)  # The marker dictionary
     camera_info = rospy.get_param("/camera_info", default="/camera/color/camera_info")  # The "/camera_info" topic
-    image_raw = rospy.get_param("/image_raw", default="/camera/color/image_raw")  # The "/image_raw" topic
+    image_topic = rospy.get_param("/image_topic", default="/camera/color/image_raw")  # The "/image_raw" topic
     bgrImage = None  # The OpenCV BGR images
     cameraMatrix = None  # The 3X3 camera matrix
     distCoeffs = None  # The distortion coefficients
     bridge = CvBridge()
 
     rospy.Subscriber(camera_info, CameraInfo, info_callback, queue_size=10)
-    rospy.Subscriber(image_raw, Image, image_callback, queue_size=10)
+    rospy.Subscriber(image_topic, Image, image_callback, queue_size=10)
 
     rospy.sleep(1)
 
@@ -90,6 +91,7 @@ if __name__ == '__main__':
                 continue
             # Estimating the pose using acquired images
             estimate_pose(bgrImage, arucoDictionary, cameraMatrix, distCoeffs)
+            time.sleep(1)
 
         except rospy.ROSInterruptException:
             rospy.logwarn("No available data!")

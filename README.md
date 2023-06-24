@@ -39,7 +39,7 @@ roslaunch hand_eye_calibration apriltag_bundle_start.launch
 roslaunch hand_eye_calibration robot_start.launch
 ```
 ### Step 6: Start calibration. 
-There are two options for hand-eye calibration, one is manual, while the other is automatic (without human assistance). If you choose the manual one, you are required to move the robot with your hands while calibrating. If you select the automatic one, please preset the poses of the robot before calibrating.
+There are two options for hand-eye calibration, one is manual, while the other is automatic (without human assistance). If you choose the manual one, you are required to move the robot with your hands while calibrating. If you select the automatic one, please [preset the poses of the robot](https://github.com/HenryWJL/hand_eye_calibration/blob/main/scripts/automatic_calib_pose_preset.py) before calibrating.
 - Manual
 ```bash
 rosrun hand_eye_calibration hand_to_eye_calib.py

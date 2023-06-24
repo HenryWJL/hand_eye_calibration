@@ -4,13 +4,13 @@ This package is used for hand-eye calibration. **Intel Realsense D455** camera a
 
 ## Usage Instruction
 
-#### Step 1: Print a calibration target
+### Step 1: Print a calibration target
 This package supports a variety of calibration targets, including checkerboard, single ArUco marker, ArUco bundles, single AprilTag marker and AprilTag bundles. Before using this package, please generate and print a calibration target.
 - [Single ArUco marker](https://chev.me/arucogen/) (Dictionary: "Original ArUco")
 - ArUco bundles: run the `generate_aruco_bundles.py`
 - [Single AprilTag marker](https://github.com/AprilRobotics/apriltag-imgs)
 
-#### Step 2: Modify the values of the following arguments in the `/launch/aruco_single_start.launch`
+### Step 2: Modify the values of the following arguments in the `/launch/aruco_single_start.launch`
 ```launch
 <launch>
 
@@ -22,11 +22,11 @@ This package supports a variety of calibration targets, including checkerboard, 
 </launch>
 ```
 
-#### Step 3: Start the camera node
+### Step 3: Start the camera node
 ```bash
 roslaunch realsense2_camera rs_camera.launch
 ```
-#### Step 4: Start the pose estimation node
+### Step 4: Start the pose estimation node
 - ArUco
 ```bash
 roslaunch hand_eye_calibration aruco_single_start.launch
@@ -35,11 +35,11 @@ roslaunch hand_eye_calibration aruco_single_start.launch
 ```bash
 roslaunch hand_eye_calibration apriltag_single_start.launch
 ```
-#### Step 5: Start the robot node
+### Step 5: Start the robot node
 ```bash
 roslaunch hand_eye_calibration robot_start.launch
 ```
-#### Step 6: Start the calibration node. 
+### Step 6: Start the calibration node. 
 ```bash
 rosrun hand_eye_calibration hand_to_eye_calib_single.py
 ```

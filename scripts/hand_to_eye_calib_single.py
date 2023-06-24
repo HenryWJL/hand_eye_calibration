@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-This is used for hand-eye calibration. Either ArUco markers or
-AprilTag markers are feasible for pose estimation.
+This is used for hand-eye calibration with either an ArUco marker or
+an AprilTag marker.
 """
 
 import rospy
@@ -17,22 +17,22 @@ import yaml
 
 
 def get_end2base_mat(pose):
-    # Calculate the gripper-to-base transformation matrix
+    # Calculating the gripper-to-base transformation matrix
     tran = np.array((pose.twist.linear.x, pose.twist.linear.y, pose.twist.linear.z))
     rot = tfs.euler.euler2mat(pose.twist.angular.x, pose.twist.angular.y, pose.twist.angular.z)
     return rot, tran
 
 
 def get_target2cam_mat(pose):
-    # Calculate the ArUco-target-to-camera transformation matrix
+    # Calculating the ArUco-target-to-camera transformation matrix
     pose = pose.transforms[0].transform
     tran = np.array(([pose.translation.x], [pose.translation.y], [pose.translation.z]))
-    rot = tfs.quaternions.quat2mat((pose.rotation.w, pose.rotation.x,
-                                    pose.rotation.y, pose.rotation.z))
+    rot = tfs.quaternions.quat2mat((pose.rotation.w, pose.rotation.x, pose.rotation.y, pose.rotation.z))
     return rot, tran
 
 
 def end_pose_callback(pose):
+    # Obtaining the pose of the end-effector
     global end_pose
     if pose is None:
         rospy.logwarn("No robot pose data!")
@@ -42,6 +42,7 @@ def end_pose_callback(pose):
 
 
 def target_pose_callback(pose):
+    # Acquiring the pose of the marker
     global target_pose
     if pose is None:
         rospy.logwarn("No ArUco or AprilTag data!")
@@ -51,22 +52,18 @@ def target_pose_callback(pose):
 
 
 if __name__ == '__main__':
-    """
-    End-pose data and target-pose data are obtained from topics '/robot_driver/tool_point' 
-    and '/tf', respectively. 
-    """
     rospy.init_node('hand_to_eye_calib_single', anonymous=True)
     rospy.Subscriber('/robot_driver/tool_point', TwistStamped, end_pose_callback, queue_size=10)
     rospy.Subscriber('/tf', TFMessage, target_pose_callback, queue_size=10)
-
+    # Variables
     end_pose = None  # The pose of robot's end
     target_pose = None  # The pose of ArUco target
-    cam2base = None
-    R_end2base_samples = []
-    T_end2base_samples = []
-    R_target2cam_samples = []
-    T_target2cam_samples = []
-    sample_number = 0
+    cam2base = None  # The camera-to-base transformation matrix
+    R_end2base_samples = []  # The rotation components of end-to-base matrices
+    T_end2base_samples = []  # The translation components of end-to-base matrices
+    R_target2cam_samples = []  # The rotation components of target-to-camera matrices
+    T_target2cam_samples = []  # The translation components of target-to-camera matrices
+    sample_number = 0  # The number of samples already recorded
 
     rospy.sleep(1)
 
@@ -74,22 +71,23 @@ if __name__ == '__main__':
         try:
             if end_pose is None:
                 rospy.logwarn("Waiting for JAKA data...")
-                time.sleep(2)
+                time.sleep(1)
                 continue
 
             if target_pose is None:
                 rospy.logwarn("Waiting for ArUco or AprilTag data...")
-                time.sleep(2)
+                time.sleep(1)
                 continue
 
             print("Record: r, Calculate: c, Save: s, Quit: q")
             command = str(input())
 
             if command == 'r':
+                # Recording target-to-camera matrix data
                 (R_target2cam, T_target2cam) = get_target2cam_mat(target_pose)
                 R_target2cam_samples.append(R_target2cam)
                 T_target2cam_samples.append(T_target2cam)
-
+                # Recording end-to-base matrix data
                 (R_end2base, T_end2base) = get_end2base_mat(end_pose)
                 R_end2base_samples.append(R_end2base)
                 T_end2base_samples.append(T_end2base)
@@ -102,6 +100,7 @@ if __name__ == '__main__':
                     rospy.logwarn("No enough samples!")
 
                 else:
+                    # Calculating the camera-to-base matrix
                     R_cam2base, T_cam2base = cv2.calibrateHandEye(R_end2base_samples, T_end2base_samples,
                                                                   R_target2cam_samples, T_target2cam_samples,
                                                                   cv2.CALIB_HAND_EYE_TSAI)
@@ -118,8 +117,9 @@ if __name__ == '__main__':
                     rospy.logwarn("No result to save!")
 
                 else:
-                    with open('../yaml/camera_to_base_matrix_apriltag.yaml', 'w', encoding='utf-8') as f:
+                    with open('../yaml/camera_to_base_matrix.yaml', 'w', encoding='utf-8') as f:
                         yaml.dump(data=cam2base.tolist(), stream=f)
+                    print("Successfully save the matrix")
                     break
 
             elif command == 'q':

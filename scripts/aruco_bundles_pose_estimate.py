@@ -15,30 +15,21 @@ from cv_bridge import CvBridge
 
 
 def info_callback(info):
-    """
-    Obtaining camera intrinsics from topic "/camera_info".
-    """
+    # Obtaining the camera matrix and the distortion coefficients
     global cameraMatrix
     global distCoeffs
-    # Obtaining camera matrix and distortion coefficients
     cameraMatrix = np.array(info.K)
     np.reshape(cameraMatrix, (3, 3))
     distCoeffs = np.array(info.D)
 
 
 def image_callback(image):
-    """
-    Acquiring image data from topic "/image_raw".
-    """
+    # Acquiring and transforming the ROS Image messages into OpenCV BGR images
     global bgrImage
-    # Transforming ROS Image messages into OpenCV BGR images
     bgrImage = bridge.imgmsg_to_cv2(image, "bgr8")
 
 
 def estimate_pose(image, dictionary, camera_matrix, dist_coeffs, rvec=None, tvec=None):
-    """
-    Detecting markers and estimating the pose of the marker bundles.
-    """
     # Declaring a dictionary object and a board object
     dictionary = cv2.aruco.Dictionary_get(dictionary)
     board = cv2.aruco.GridBoard_create(markersX, markersY, markerLength, markerSeparation, dictionary)
@@ -65,21 +56,22 @@ def estimate_pose(image, dictionary, camera_matrix, dist_coeffs, rvec=None, tvec
 
 if __name__ == '__main__':
     rospy.init_node("hand_to_eye_calib_bundle", anonymous=True)
-    # Parameters
-    markersX = rospy.get_param("markers_x", default=5)
-    markersY = rospy.get_param("markers_y", default=7)
-    markerLength = rospy.get_param("marker_length", default=0.04)
-    markerSeparation = rospy.get_param("marker_separation", default=0.01)
-    arucoDictionary = rospy.get_param("aruco_dictionary", default=cv2.aruco.DICT_4X4_100)
+    # Parameters and Variables
+    markersX = rospy.get_param("/markers_x", default=5)  # The number of markers in each row
+    markersY = rospy.get_param("/markers_y", default=7)  # The number of markers in each column
+    markerLength = rospy.get_param("/marker_length", default=0.04)  # The length of each marker
+    markerSeparation = rospy.get_param("/marker_separation", default=0.01)  # The separation between any two markers
+    arucoDictionary = rospy.get_param("/aruco_dictionary", default=cv2.aruco.DICT_4X4_100)  # The marker dictionary
     camera_info = rospy.get_param("/camera_info", default="/camera/color/camera_info")  # The "/camera_info" topic
     image_raw = rospy.get_param("/image_raw", default="/camera/color/image_raw")  # The "/image_raw" topic
     bgrImage = None  # The OpenCV BGR images
-    bridge = CvBridge()
     cameraMatrix = None  # The 3X3 camera matrix
     distCoeffs = None  # The distortion coefficients
-    # Subscribing to certain topics
+    bridge = CvBridge()
+
     rospy.Subscriber(camera_info, CameraInfo, info_callback, queue_size=10)
     rospy.Subscriber(image_raw, Image, image_callback, queue_size=10)
+
     rospy.sleep(1)
 
     while not rospy.is_shutdown():

@@ -8,11 +8,16 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   sensor_msgs
   tf2_msgs
+  cv_bridge
 )
 
 catkin_package(
-  LIBRARIES aruco_utils
-  CATKIN_DEPENDS rospy geometry_msgs sensor_msgs tf2_msgs
+  CATKIN_DEPENDS
+    rospy
+    geometry_msgs
+    sensor_msgs
+    tf2_msgs
+    cv_bridge
 )
 
 include_directories(
@@ -20,11 +25,16 @@ include_directories(
   ${OpenCV_INCLUDE_DIRS}
 )
 
-catkin_install_python(PROGRAMS
-  scripts/hand_to_eye_calib_single.py scripts/automatic_hand_to_eye_calib_single.py
-  scripts/aruco_bundles_pose_estimate.py scripts/automatic_hand_to_eye_calib_bundle.py
-  scripts/easy_hand_to_eye_calib.py 
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+catkin_install_python(
+  PROGRAMS
+    scripts/automatic_calib_pose_set.py
+    scripts/aruco_bundles_pose_estimate.py
+    scripts/automatic_hand_to_eye_calib_single.py
+    scripts/automatic_hand_to_eye_calib_bundle.py
+    scripts/easy_hand_to_eye_calib.py 
+    scripts/hand_to_eye_calib_single.py
+  DESTINATION
+    ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 

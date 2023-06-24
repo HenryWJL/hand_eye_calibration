@@ -49,5 +49,4 @@ if __name__ == '__main__':
     "DICT_APRILTAG_36h10"
     "DICT_APRILTAG_36h11"
     """
-
     generate_bundles()

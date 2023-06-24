@@ -10,14 +10,14 @@ This package supports a variety of calibration targets, including checkerboard, 
 - [ArUco bundles](https://github.com/HenryWJL/hand_eye_calibration/blob/main/scripts/generate_aruco_bundles.py)
 - [Single AprilTag marker](https://github.com/AprilRobotics/apriltag-imgs)
 
-### Step 2: Modify the arguments in the launch files
-Please follow the instructions in the launch files and modify the arguments. 
+### Step 2: Modify the arguments in `launch` and `config`
+Please follow the instructions in the documents while modifying the arguments. 
 
-### Step 3: Start the camera node
+### Step 3: Start the camera
 ```bash
 roslaunch realsense2_camera rs_camera.launch
 ```
-### Step 4: Start the pose estimation node
+### Step 4: Start pose estimation
 - Single ArUco marker
 ```bash
 roslaunch hand_eye_calibration aruco_single.launch
@@ -28,14 +28,19 @@ roslaunch hand_eye_calibration aruco_bundle.launch
 ```
 - AprilTag
 ```bash
-roslaunch hand_eye_calibration apriltag_single.launch
+roslaunch hand_eye_calibration apriltag.launch
 ```
-### Step 5: Start the robot node
+### Step 5: Start the robot
 ```bash
 roslaunch hand_eye_calibration robot_start.launch
 ```
-### Step 6: Start the calibration node. 
+### Step 6: Start calibration. 
+There are two options for hand-eye calibration, one is manual, while the other is automatic (without human assistance). If you choose the manual one, you are required to move the robot with your hands while calibrating. If you select the automatic one, please preset the poses of the robot before calibrating.
+- Manual
 ```bash
-rosrun hand_eye_calibration hand_to_eye_calib_single.py
+rosrun hand_eye_calibration hand_to_eye_calib.py
 ```
-When everything is prepared, move the calibration target and type 'r' in the terminal to record calibration data. After recording more than two data, type 'c' in the terminal to calculate the calibration result. After a few seconds, you can view the result on the screen. If you want to save the result, type 's' in the terminal. This will save the result as a **.yaml** file.
+- Automatic
+```bash
+rosrun hand_eye_calibration automatic_hand_to_eye_calib.py
+```

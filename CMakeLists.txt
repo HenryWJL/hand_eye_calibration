@@ -29,9 +29,10 @@ catkin_install_python(
   PROGRAMS
     scripts/automatic_calib_pose_preset.py
     scripts/aruco_bundles_pose_estimate.py
+    scripts/checkerboard_pose_estimate.py
     scripts/automatic_hand_to_eye_calib.py
-    scripts/easy_hand_to_eye_calib.py 
     scripts/hand_to_eye_calib.py
+    scripts/easy_hand_to_eye_calib.py 
   DESTINATION
     ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

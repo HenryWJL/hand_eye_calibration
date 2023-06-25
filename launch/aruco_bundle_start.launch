@@ -9,13 +9,13 @@
     <arg name="dictionary"        default="cv2.aruco.DICT_4X4_100"/>
     
     <node pkg="hand_eye_calibration" type="aruco_bundles_pose_estimate.py" name="aruco_bundles_pose_estimate">
-        <param name="image_topic"        value="$(arg image_topic)"/>
-        <param name="camera_info"        value="$(arg camera_info)"/>
-        <param name="markers_per_row"            value="$(arg markerX)"/>
-        <param name="markers_per_column"            value="$(arg markerY)"/>
+        <param name="image_topic"         value="$(arg image_topic)"/>
+        <param name="camera_info"         value="$(arg camera_info)"/>
+        <param name="markers_per_row"     value="$(arg markerX)"/>
+        <param name="markers_per_column"  value="$(arg markerY)"/>
         <param name="marker_length"       value="$(arg markerLength)"/>
         <param name="marker_separation"   value="$(arg markerSeparation)"/> 
-        <param name="aruco_dictionary"         value="$(arg dictionary)"/>
+        <param name="aruco_dictionary"    value="$(arg dictionary)"/>
     </node> 
 
 </launch>

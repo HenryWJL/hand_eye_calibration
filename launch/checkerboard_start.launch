@@ -1,0 +1,17 @@
+<launch>
+    
+    <arg name="image_topic"       default="/camera/color/image_raw"/>
+    <arg name="camera_info"       default="/camera/color/camera_info"/> 
+    <arg name="cornerX"          default="5"/>
+    <arg name="cornerY"          default="7"/>    
+    <arg name="gridLength"        default="0.04"/> 
+    
+    <node pkg="hand_eye_calibration" type="aruco_bundles_pose_estimate.py" name="aruco_bundles_pose_estimate">
+        <param name="image_topic"        value="$(arg image_topic)"/>
+        <param name="camera_info"        value="$(arg camera_info)"/>
+        <param name="corners_per_row"    value="$(arg cornerX)"/>
+        <param name="corners_per_column" value="$(arg cornerY)"/>
+        <param name="grid_length"        value="$(arg gridLength)"/>
+    </node> 
+
+</launch>

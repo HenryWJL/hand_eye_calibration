@@ -12,7 +12,7 @@ import yaml
 import jkrc
 
 if __name__ == '__main__':
-    rospy.init_node('automatic_hand_eye_calib_pose_set', anonymous=True)
+    rospy.init_node('automatic_calib_pose_preset', anonymous=True)
     robot_ip = rospy.get_param("/robot_ip", default="192.168.200.100")
     # Creating an array storing the 25 joint poses
     joint_pose = np.array([25, 6])

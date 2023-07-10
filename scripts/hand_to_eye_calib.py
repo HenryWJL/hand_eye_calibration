@@ -52,7 +52,7 @@ def target_pose_callback(pose):
 
 
 if __name__ == '__main__':
-    rospy.init_node('hand_to_eye_calib_single', anonymous=True)
+    rospy.init_node('hand_to_eye_calib', anonymous=True)
     rospy.Subscriber('/robot_driver/tool_point', TwistStamped, end_pose_callback, queue_size=10)
     rospy.Subscriber('/tf', TFMessage, target_pose_callback, queue_size=10)
     # Variables

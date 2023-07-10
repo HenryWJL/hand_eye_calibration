@@ -76,7 +76,7 @@ def estimate_pose(image, aruco_dictionary, aruco_board, camera_matrix, dist_coef
 
 
 if __name__ == '__main__':
-    rospy.init_node("hand_to_eye_calib_bundle", anonymous=True)
+    rospy.init_node("aruco_bundles_pose_estimate", anonymous=True)
     # Parameters and Variables
     markersX = rospy.get_param("markers_per_row", default=5)  # The number of markers in each row
     markersY = rospy.get_param("markers_per_column", default=7)  # The number of markers in each column

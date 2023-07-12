@@ -35,7 +35,7 @@ def get_target2cam_mat(pose):
 def callback(pose):
     # Obtaining the pose of the marker
     global target_pose
-    if pose is None:
+    if not pose:
         rospy.logwarn("No ArUco or AprilTag data!")
 
     else:

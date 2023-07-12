@@ -69,12 +69,12 @@ if __name__ == '__main__':
 
     while not rospy.is_shutdown():
         try:
-            if end_pose is None:
+            if not end_pose:
                 rospy.logwarn("Waiting for JAKA data...")
                 time.sleep(1)
                 continue
 
-            if target_pose is None:
+            if not target_pose:
                 rospy.logwarn("Waiting for ArUco or AprilTag data...")
                 time.sleep(1)
                 continue
@@ -113,7 +113,7 @@ if __name__ == '__main__':
                     print(cam2base_quaternions.tolist())  # Quaternions
 
             elif command == 's':
-                if cam2base is None:
+                if not cam2base:
                     rospy.logwarn("No result to save!")
 
                 else:

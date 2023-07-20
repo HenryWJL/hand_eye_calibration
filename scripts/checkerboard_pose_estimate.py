@@ -96,21 +96,21 @@ if __name__ == '__main__':
 
     while not rospy.is_shutdown():
         try:
-            if not bgrImage:
+            if bgrImage is None:
                 rospy.logwarn("No image data available!")
                 time.sleep(1)
                 continue
-            if not cameraMatrix:
+            if cameraMatrix is None:
                 rospy.logwarn("No camera matrix available!")
                 time.sleep(1)
                 continue
-            if not distCoeffs:
+            if distCoeffs is None:
                 rospy.logwarn("No distortion coefficients available!")
                 time.sleep(1)
                 continue
             # Estimating the pose
             estimatedPose = estimate_pose(bgrImage, checkerboardSize, gridLength, cameraMatrix, distCoeffs)
-            if not estimatedPose:
+            if estimatedPose is None:
                 rospy.logwarn("Pose estimation failed!")
                 time.sleep(1)
 

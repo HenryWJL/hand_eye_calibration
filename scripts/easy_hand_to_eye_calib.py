@@ -35,7 +35,7 @@ if __name__ == '__main__':
     rospy.init_node('easy_hand_to_eye_calib', anonymous=True)
     rospy.Subscriber('/tf', TFMessage, callback, queue_size=10)
     while not rospy.is_shutdown():
-        if not cam2base:
+        if cam2base is None:
             rospy.logwarn("Waiting for ArUco data...")
             time.sleep(2)
             continue

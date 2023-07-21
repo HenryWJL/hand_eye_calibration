@@ -8,10 +8,10 @@ tag_bundles:
       name: 'apriltag bundle'
       layout:
         [
-          {id: 2, size: }
-          {id: 4, size: }
-          {id: 6, size: }
-          {id: 8, size: }
+          {id: 2, size: 0.05}
+          {id: 4, size: 0.05, x: 0.06}
+          {id: 6, size: 0.05, y: 0.06}
+          {id: 8, size: 0.05, x: 0.06, y: 0.06}
         ]
     }
   ]

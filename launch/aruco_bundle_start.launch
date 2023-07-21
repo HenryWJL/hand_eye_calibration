@@ -4,9 +4,9 @@
     <arg name="camera_info"       default="/camera/color/camera_info"/> 
     <arg name="markerX"           default="3"/>
     <arg name="markerY"           default="4"/>    
-    <arg name="markerLength"      default="0.05"/> 
-    <arg name="markerSeparation"  default="0.01"/> 
-    <arg name="dictionary"        default="cv2.aruco.DICT_6X6_100"/>
+    <arg name="markerLength"      default="0.042"/> 
+    <arg name="markerSeparation"  default="0.0085"/> 
+    <arg name="dictionary"        default="9"/>  <!--cv2.aruco.DICT_6X6_100-->
     
     <node pkg="hand_eye_calibration" type="aruco_bundles_pose_estimate.py" name="aruco_bundles_pose_estimate">
         <param name="image_topic"         value="$(arg image_topic)"/>

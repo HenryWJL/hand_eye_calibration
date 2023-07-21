@@ -68,7 +68,6 @@ def estimate_pose(image, aruco_dictionary, aruco_board, camera_matrix, dist_coef
         pose.rotation.x = R_target2cam[1]
         pose.rotation.y = R_target2cam[2]
         pose.rotation.z = R_target2cam[3]
-
         return tf
 
     else:
@@ -78,13 +77,13 @@ def estimate_pose(image, aruco_dictionary, aruco_board, camera_matrix, dist_coef
 if __name__ == '__main__':
     rospy.init_node("aruco_bundles_pose_estimate", anonymous=True)
     # Parameters and Variables
-    markersX = rospy.get_param("markers_per_row", default=5)  # The number of markers in each row
-    markersY = rospy.get_param("markers_per_column", default=7)  # The number of markers in each column
-    markerLength = rospy.get_param("marker_length", default=0.04)  # The length of each marker
-    markerSeparation = rospy.get_param("marker_separation", default=0.01)  # The separation between any two markers
-    dictionary = rospy.get_param("aruco_dictionary", default=cv2.aruco.DICT_4X4_100)  # The marker dictionary
-    camera_info = rospy.get_param("camera_info", default="/camera/color/camera_info")  # The camera_info topic
-    image_topic = rospy.get_param("image_topic", default="/camera/color/image_raw")  # The image topic
+    markersX = rospy.get_param("aruco_bundles_pose_estimate/markers_per_row", default=5)  # The number of markers in each row
+    markersY = rospy.get_param("aruco_bundles_pose_estimate/markers_per_column", default=7)  # The number of markers in each column
+    markerLength = rospy.get_param("aruco_bundles_pose_estimate/marker_length", default=0.04)  # The length of each marker
+    markerSeparation = rospy.get_param("aruco_bundles_pose_estimate/marker_separation", default=0.01)  # The separation between any two markers
+    dictionary = rospy.get_param("aruco_bundles_pose_estimate/aruco_dictionary", default=cv2.aruco.DICT_4X4_100)  # The marker dictionary
+    camera_info = rospy.get_param("aruco_bundles_pose_estimate/camera_info", default="/camera/color/camera_info")  # The camera_info topic
+    image_topic = rospy.get_param("aruco_bundles_pose_estimate/image_topic", default="/camera/color/image_raw")  # The image topic
     bgrImage = None  # The OpenCV BGR images
     cameraMatrix = None  # The 3X3 camera matrix
     distCoeffs = None  # The distortion coefficients
@@ -115,6 +114,7 @@ if __name__ == '__main__':
                 rospy.logwarn("No distortion coefficients available!")
                 time.sleep(1)
                 continue
+
             # Estimating the pose
             estimatedPose = estimate_pose(bgrImage, arucoDictionary, arucoBoard, cameraMatrix, distCoeffs)
             if estimatedPose is None:

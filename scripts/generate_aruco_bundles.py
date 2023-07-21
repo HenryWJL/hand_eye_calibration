@@ -9,22 +9,22 @@ import cv2
 from aruco_utils import ARUCO_DICTIONARY
 
 
-def generate_bundles():
-    dictionary = cv2.aruco.Dictionary_get(ARUCO_DICTIONARY[arucoDictionary])
-    board = cv2.aruco.GridBoard_create(markersX, markersY, markerLength, markerSeparation, dictionary)
-    width = int(markersX * (markerLength + markerSeparation) * 10000)  # The width of the image (in pixels)
-    height = int(markersY * (markerLength + markerSeparation) * 10000)  # The height of the image (in pixels)
+def generate_bundles(markers_x, markers_y, marker_length, marker_separation, aruco_dictionary):
+    dictionary = cv2.aruco.Dictionary_get(ARUCO_DICTIONARY[aruco_dictionary])
+    board = cv2.aruco.GridBoard_create(markers_x, markers_y, marker_length, marker_separation, dictionary)
+    width = int(markers_x * (marker_length + marker_separation) * 10000)  # The width of the image (in pixels)
+    height = int(markers_y * (marker_length + marker_separation) * 10000)  # The height of the image (in pixels)
     board_img = cv2.aruco_GridBoard.draw(board, (width, height), 1)
-    cv2.imwrite('../Img/{}X{}_{}_board.jpg'.format(markersX, markersY, aruco_dictionary), board_img)
+    cv2.imwrite('../Img/{}X{}_{}_board.jpg'.format(markers_x, markers_y, aruco_dictionary), board_img)
 
 
 if __name__ == '__main__':
     # Parameters
-    markersX = 5  # The number of markers in each row
-    markersY = 7  # The number of markers in each column
-    markerLength = 0.04  # The length of each marker (in meters)
+    markersX = 3  # The number of markers in each row
+    markersY = 4  # The number of markers in each column
+    markerLength = 0.05  # The length of each marker (in meters)
     markerSeparation = 0.01  # The separation between any two markers (in meters)
-    arucoDictionary = "DICT_4X4_100"  # The dictionary that the markers belong to
+    arucoDictionary = "DICT_6X6_100"  # The dictionary that the markers belong to
     """
     Available Dictionaries:
     "DICT_ARUCO_ORIGINAL"
@@ -49,4 +49,4 @@ if __name__ == '__main__':
     "DICT_APRILTAG_36h10"
     "DICT_APRILTAG_36h11"
     """
-    generate_bundles()
+    generate_bundles(markersX, markersY, markerLength, markerSeparation, arucoDictionary)

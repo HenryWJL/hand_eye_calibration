@@ -20,11 +20,11 @@ def generate_bundles(markers_x, markers_y, marker_length, marker_separation, aru
 
 if __name__ == '__main__':
     # Parameters
-    markersX = 3  # The number of markers in each row
-    markersY = 4  # The number of markers in each column
-    markerLength = 0.05  # The length of each marker (in meters)
+    markersX = 5  # The number of markers in each row
+    markersY = 6  # The number of markers in each column
+    markerLength = 0.04  # The length of each marker (in meters)
     markerSeparation = 0.01  # The separation between any two markers (in meters)
-    arucoDictionary = "DICT_6X6_100"  # The dictionary that the markers belong to
+    arucoDictionary = "DICT_6X6_250"  # The dictionary that the markers belong to
     """
     Available Dictionaries:
     "DICT_ARUCO_ORIGINAL"

@@ -1,8 +1,17 @@
 standalone_tags:
   [
-     {id: 250, size: 0.0215}
   ]
 
 tag_bundles:
   [
+    {
+      name: 'apriltag bundle'
+      layout:
+        [
+          {id: 2, size: }
+          {id: 4, size: }
+          {id: 6, size: }
+          {id: 8, size: }
+        ]
+    }
   ]

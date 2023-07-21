@@ -17,5 +17,10 @@
         <param name="marker_separation"   value="$(arg markerSeparation)"/> 
         <param name="aruco_dictionary"    value="$(arg dictionary)"/>
     </node> 
+    
+    <node pkg="image_view" type="image_view" name="image_view" respawn="false" output="screen">
+        <remap from="image" to="/tag_detections_image"/>
+        <param name="autosize" value="true" />
+    </node>
 
 </launch>

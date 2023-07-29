@@ -36,6 +36,7 @@ def estimate_pose(image, aruco_dictionary, aruco_board, camera_matrix, dist_coef
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     # Setting detector parameters
     parameters = cv2.aruco.DetectorParameters_create()
+    # parameters = cv2.aruco.DetectorParameters()  # latest version
     parameters.adaptiveThreshConstant = 10
     # Detecting markers
     corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(gray, aruco_dictionary, parameters=parameters)
@@ -47,6 +48,7 @@ def estimate_pose(image, aruco_dictionary, aruco_board, camera_matrix, dist_coef
             # Drawing quads and axes on the image
             cv2.aruco.drawDetectedMarkers(image, corners)
             cv2.aruco.drawAxis(image, camera_matrix, dist_coeffs, rvec, tvec, 0.05)
+            # cv2.aruco.drawFrameAxes(image, camera_matrix, dist_coeffs, rvec, tvec, 0.05)  # latest version
             image = bridge.cv2_to_imgmsg(image, "bgr8")
             # Obtaining the translational and the rotational components of the pose
             T_target2cam = tvec

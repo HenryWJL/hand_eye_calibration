@@ -109,6 +109,7 @@ if __name__ == '__main__':
 
     # Creating a dictionary and a grid board
     arucoDictionary = cv2.aruco.Dictionary_get(dictionary)
+    # arucoDictionary = cv2.aruco.getPredefinedDictionary(dictionary)  # lateset version
     arucoBoard = cv2.aruco.GridBoard_create(markersX, markersY, markerLength, markerSeparation, arucoDictionary)
 
     rospy.sleep(1)

@@ -11,6 +11,7 @@ from aruco_utils import ARUCO_DICTIONARY
 
 def generate_bundles(markers_x, markers_y, marker_length, marker_separation, aruco_dictionary):
     dictionary = cv2.aruco.Dictionary_get(ARUCO_DICTIONARY[aruco_dictionary])
+    # dictionary = cv2.aruco.getPredefinedDictionary(ARUCO_DICTIONARY[aruco_dictionary])  # lateset version
     board = cv2.aruco.GridBoard_create(markers_x, markers_y, marker_length, marker_separation, dictionary)
     width = int(markers_x * (marker_length + marker_separation) * 10000)  # The width of the image (in pixels)
     height = int(markers_y * (marker_length + marker_separation) * 10000)  # The height of the image (in pixels)

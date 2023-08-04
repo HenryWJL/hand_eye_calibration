@@ -14,8 +14,8 @@ def generate_bundles(markers_x, markers_y, marker_length, marker_separation, aru
     board = cv2.aruco.GridBoard_create(markers_x, markers_y, marker_length, marker_separation, dictionary)
     width = int(markers_x * (marker_length + marker_separation) * 10000)  # The width of the image (in pixels)
     height = int(markers_y * (marker_length + marker_separation) * 10000)  # The height of the image (in pixels)
-    board_img = cv2.aruco_GridBoard.draw(board, (width, height), 1)
-    cv2.imwrite('../Img/{}X{}_{}_board.jpg'.format(markers_x, markers_y, aruco_dictionary), board_img)
+    boardImg = cv2.aruco_GridBoard.draw(board, (width, height), 1)
+    cv2.imwrite('../Img/aruco_bundles/{}X{}_{}.jpg'.format(markers_x, markers_y, aruco_dictionary), boardImg)
 
 
 if __name__ == '__main__':

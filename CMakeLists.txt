@@ -28,8 +28,9 @@ include_directories(
 catkin_install_python(
   PROGRAMS
     scripts/automatic_calib_pose_preset.py
-    scripts/aruco_bundles_pose_estimate.py
-    scripts/checkerboard_pose_estimate.py
+    scripts/aruco_bundles_detection.py
+    scripts/checkerboard_detection.py
+    scripts/charuco_detection.py
     scripts/automatic_hand_to_eye_calib.py
     scripts/hand_to_eye_calib.py
     scripts/easy_hand_to_eye_calib.py 

@@ -6,7 +6,7 @@
     <arg name="cornerY"          default="9"/>    
     <arg name="gridLength"        default="0.028"/> 
     
-    <node pkg="hand_eye_calibration" type="checkerboard_pose_estimate.py" name="checkerboard_pose_estimate">
+    <node pkg="hand_eye_calibration" type="checkerboard_detection.py" name="checkerboard_detection">
         <param name="image_topic"        value="$(arg image_topic)"/>
         <param name="camera_info"        value="$(arg camera_info)"/>
         <param name="corners_per_row"    value="$(arg cornerX)"/>

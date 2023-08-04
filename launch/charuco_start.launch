@@ -2,24 +2,24 @@
     
     <arg name="image_topic"       default="/camera/color/image_raw"/>
     <arg name="camera_info"       default="/camera/color/camera_info"/> 
-    <arg name="markerX"           default="3"/>
-    <arg name="markerY"           default="4"/>    
-    <arg name="markerLength"      default="0.042"/> 
-    <arg name="markerSeparation"  default="0.0085"/> 
+    <arg name="squaresX"          default="4"/>
+    <arg name="squaresY"          default="4"/>    
+    <arg name="squareLength"      default="0.04"/> 
+    <arg name="markerLength"      default="0.03"/> 
     <arg name="dictionary"        default="9"/>  <!--cv2.aruco.DICT_6X6_100-->
     
-    <node pkg="hand_eye_calibration" type="aruco_bundles_detection.py" name="aruco_bundles_detection">
+    <node pkg="hand_eye_calibration" type="charuco_detection.py" name="charuco_detection">
         <param name="image_topic"         value="$(arg image_topic)"/>
         <param name="camera_info"         value="$(arg camera_info)"/>
-        <param name="markers_per_row"     value="$(arg markerX)"/>
-        <param name="markers_per_column"  value="$(arg markerY)"/>
+        <param name="squares_per_row"     value="$(arg squaresX)"/>
+        <param name="squares_per_column"  value="$(arg squaresY)"/>
+        <param name="square_length"       value="$(arg squareLength)"/> 
         <param name="marker_length"       value="$(arg markerLength)"/>
-        <param name="marker_separation"   value="$(arg markerSeparation)"/> 
         <param name="aruco_dictionary"    value="$(arg dictionary)"/>
     </node> 
     
     <node pkg="image_view" type="image_view" name="image_view" respawn="false" output="screen">
-        <remap from="image" to="/tag_detections_image"/>
+        <remap from="image" to="/charuco_detections_image"/>
         <param name="autosize" value="true" />
     </node>
 

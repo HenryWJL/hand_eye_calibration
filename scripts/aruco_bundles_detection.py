@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-This is used for pose estimation with checkerboard.
+This is used for pose estimation with ArUco bundles.
 """
 
 import numpy as np
@@ -21,7 +21,7 @@ def camera_info_callback(info):
     global cameraMatrix
     global distCoeffs
     cameraMatrix = np.array(info.K)
-    cameraMatrix = np.reshape(cameraMatrix, (3, 3))
+    cameraMatrix = np.reshape(cameraMatrix, [3, 3])
     distCoeffs = np.array(info.D)
 
 
@@ -31,42 +31,24 @@ def image_callback(image):
     bgrImage = bridge.imgmsg_to_cv2(image, "bgr8")
 
 
-def draw_axis(img, corners, imgpts):
-    # Convert np.float32 to int32
-    imgpts = imgpts.astype(int)
-    corners = corners.astype(int)
-    # Drawing axes
-    corner = tuple(corners[0].ravel())
-    img = cv2.line(img, corner, tuple(imgpts[0].ravel()), (255, 0, 0), 3)
-    img = cv2.line(img, corner, tuple(imgpts[1].ravel()), (0, 255, 0), 3)
-    img = cv2.line(img, corner, tuple(imgpts[2].ravel()), (0, 0, 255), 3)
-    return img
-
-
-def estimate_pose(image, size, length, camera_matrix, dist_coeffs):
-    # Setting criteria for corner location refinement
-    criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
-    # Setting object points
-    points_per_row, points_per_column = size
-    objectPoints = np.zeros((points_per_row * points_per_column, 3))
-    objectPoints[:, : 2] = np.mgrid[0: points_per_row, 0: points_per_column].T.reshape(-1, 2)
-    objectPoints = objectPoints * length
+def estimate_pose(image, aruco_dictionary, aruco_board, camera_matrix, dist_coeffs, rvec=None, tvec=None):
     # Transforming the BGR images into gray-scale images
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    # Finding the corners of the checkerboard
-    ret, corners = cv2.findChessboardCorners(gray, size)
-    if ret:
-        # Corners refinement
-        corners = cv2.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)
-        # Computing pose
-        ret, rvec, tvec = cv2.solvePnP(objectPoints, corners, camera_matrix, dist_coeffs)
+    # Setting detector parameters
+    parameters = cv2.aruco.DetectorParameters_create()
+    parameters.adaptiveThreshConstant = 10
+    # Detecting markers
+    corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(gray, aruco_dictionary, parameters=parameters)
+    # If at least one marker is detected, estimating the pose
+    if len(corners) > 0 and len(ids) > 0:
+        ret, rvec, tvec = cv2.aruco.estimatePoseBoard(corners, ids, aruco_board,
+                                                      camera_matrix, dist_coeffs, rvec, tvec)
         if ret:
-            # Drawing axes on the image
-            axis = np.array([[0.05, 0, 0], [0, 0.05, 0], [0, 0, -0.05]], dtype=np.float32).reshape(-1, 3)
-            imagePoints, jacobian = cv2.projectPoints(axis, rvec, tvec, camera_matrix, dist_coeffs)
-            image = draw_axis(image, corners, imagePoints)
+            # Drawing quads and axes on the image
+            cv2.aruco.drawDetectedMarkers(image, corners, ids)
+            cv2.aruco.drawAxis(image, camera_matrix, dist_coeffs, rvec, tvec, 0.05)
             image = bridge.cv2_to_imgmsg(image, "bgr8")
-            # Obtaining translation and rotation components of the pose
+            # Obtaining the translational and the rotational components of the pose
             T_target2cam = tvec
             R_target2cam = cv2.Rodrigues(rvec)[0]
             R_target2cam = tfs.quaternions.mat2quat(R_target2cam)
@@ -75,7 +57,7 @@ def estimate_pose(image, size, length, camera_matrix, dist_coeffs):
             transforms = TransformStamped()
 
             transforms.header.frame_id = "/camera_link"
-            transforms.child_frame_id = "/checkerboard"
+            transforms.child_frame_id = "/aruco_board"
             transforms.transform.translation.x = T_target2cam[0]
             transforms.transform.translation.y = T_target2cam[1]
             transforms.transform.translation.z = T_target2cam[2]
@@ -96,18 +78,21 @@ def estimate_pose(image, size, length, camera_matrix, dist_coeffs):
 
 
 if __name__ == '__main__':
-    rospy.init_node("checkerboard_pose_estimate", anonymous=True)
+    rospy.init_node("aruco_bundles_detection", anonymous=True)
     # Parameters and Variables
-    cornersX = rospy.get_param("checkerboard_pose_estimate/corners_per_row",
-                               default=5)  # The number of corners in each row
-    cornersY = rospy.get_param("checkerboard_pose_estimate/corners_per_column",
-                               default=7)  # The number of corners in each column
-    checkerboardSize = (cornersX, cornersY)
-    gridLength = rospy.get_param("checkerboard_pose_estimate/grid_length",
-                                 default=0.04)  # The length of each grid
-    camera_info = rospy.get_param("checkerboard_pose_estimate/camera_info",
+    markersX = rospy.get_param("aruco_bundles_pose_estimate/markers_per_row",
+                               default=5)  # The number of markers in each row
+    markersY = rospy.get_param("aruco_bundles_pose_estimate/markers_per_column",
+                               default=7)  # The number of markers in each column
+    markerLength = rospy.get_param("aruco_bundles_pose_estimate/marker_length",
+                                   default=0.04)  # The length of each marker
+    markerSeparation = rospy.get_param("aruco_bundles_pose_estimate/marker_separation",
+                                       default=0.01)  # The separation between any two markers
+    dictionary = rospy.get_param("aruco_bundles_pose_estimate/aruco_dictionary",
+                                 default=cv2.aruco.DICT_4X4_100)  # The marker dictionary
+    camera_info = rospy.get_param("aruco_bundles_pose_estimate/camera_info",
                                   default="/camera/color/camera_info")  # The camera_info topic
-    image_topic = rospy.get_param("checkerboard_pose_estimate/image_topic",
+    image_topic = rospy.get_param("aruco_bundles_pose_estimate/image_topic",
                                   default="/camera/color/image_raw")  # The image topic
     bgrImage = None  # The OpenCV BGR images
     cameraMatrix = None  # The 3X3 camera matrix
@@ -117,8 +102,12 @@ if __name__ == '__main__':
     rospy.Subscriber(camera_info, CameraInfo, camera_info_callback, queue_size=10)
     rospy.Subscriber(image_topic, Image, image_callback, queue_size=10)
     tf_pub = rospy.Publisher("/tf", TFMessage, queue_size=10)
-    image_pub = rospy.Publisher("/checkerboard_detections_image", Image, queue_size=10)
+    image_pub = rospy.Publisher("/tag_detections_image", Image, queue_size=10)
     rate = rospy.Rate(5)
+
+    # Creating a dictionary and a grid board
+    arucoDictionary = cv2.aruco.Dictionary_get(dictionary)
+    arucoBoard = cv2.aruco.GridBoard_create(markersX, markersY, markerLength, markerSeparation, arucoDictionary)
 
     rospy.sleep(1)
 
@@ -136,10 +125,11 @@ if __name__ == '__main__':
                 rospy.logwarn("No distortion coefficients available!")
                 time.sleep(1)
                 continue
+
             # Estimating the pose
-            image_msg, estimatedPose = estimate_pose(bgrImage, checkerboardSize, gridLength, cameraMatrix, distCoeffs)
+            image_msg, estimatedPose = estimate_pose(bgrImage, arucoDictionary, arucoBoard, cameraMatrix, distCoeffs)
             if estimatedPose is None and image_msg is None:
-                rospy.logwarn("Pose estimation failed!")
+                rospy.logwarn("Detection failed!")
                 time.sleep(1)
 
             else:

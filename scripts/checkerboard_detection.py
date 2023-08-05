@@ -98,16 +98,16 @@ def estimate_pose(image, size, length, camera_matrix, dist_coeffs):
 if __name__ == '__main__':
     rospy.init_node("checkerboard_detection", anonymous=True)
     # Parameters and Variables
-    cornersX = rospy.get_param("checkerboard_pose_estimate/corners_per_row",
+    cornersX = rospy.get_param("checkerboard_detection/corners_per_row",
                                default=5)  # The number of corners in each row
-    cornersY = rospy.get_param("checkerboard_pose_estimate/corners_per_column",
+    cornersY = rospy.get_param("checkerboard_detection/corners_per_column",
                                default=7)  # The number of corners in each column
     checkerboardSize = (cornersX, cornersY)
-    gridLength = rospy.get_param("checkerboard_pose_estimate/grid_length",
+    gridLength = rospy.get_param("checkerboard_detection/grid_length",
                                  default=0.04)  # The length of each grid
-    camera_info = rospy.get_param("checkerboard_pose_estimate/camera_info",
+    camera_info = rospy.get_param("checkerboard_detection/camera_info",
                                   default="/camera/color/camera_info")  # The camera_info topic
-    image_topic = rospy.get_param("checkerboard_pose_estimate/image_topic",
+    image_topic = rospy.get_param("checkerboard_detection/image_topic",
                                   default="/camera/color/image_raw")  # The image topic
     bgrImage = None  # The OpenCV BGR images
     cameraMatrix = None  # The 3X3 camera matrix

@@ -41,7 +41,7 @@ def estimate_pose(image, aruco_dictionary, charuco_board, camera_matrix, dist_co
     corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(gray, aruco_dictionary, parameters=parameters)
     # If at least one marker is detected, estimating the pose
     if len(corners) > 0 and len(ids) > 0:
-        charucoCorners, charucoIds = cv2.aruco.interpolateCornersCharuco(corners, ids, gray, charuco_board)
+        ret, charucoCorners, charucoIds = cv2.aruco.interpolateCornersCharuco(corners, ids, gray, charuco_board)
         if len(charucoCorners) > 0 and len(charucoIds) > 0:
             ret, rvec, tvec = cv2.aruco.estimatePoseCharucoBoard(charucoCorners, charucoIds, charuco_board,
                                                                  camera_matrix, dist_coeffs, rvec, tvec)

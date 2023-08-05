@@ -34,6 +34,7 @@ catkin_install_python(
     scripts/automatic_hand_to_eye_calib.py
     scripts/hand_to_eye_calib.py
     scripts/easy_hand_to_eye_calib.py 
+    scripts/marker_detection.py
   DESTINATION
     ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

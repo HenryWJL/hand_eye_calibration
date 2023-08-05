@@ -82,19 +82,19 @@ def estimate_pose(image, aruco_dictionary, aruco_board, camera_matrix, dist_coef
 if __name__ == '__main__':
     rospy.init_node("aruco_bundles_detection", anonymous=True)
     # Parameters and Variables
-    markersX = rospy.get_param("aruco_bundles_pose_estimate/markers_per_row",
+    markersX = rospy.get_param("aruco_bundles_detection/markers_per_row",
                                default=5)  # The number of markers in each row
-    markersY = rospy.get_param("aruco_bundles_pose_estimate/markers_per_column",
+    markersY = rospy.get_param("aruco_bundles_detection/markers_per_column",
                                default=7)  # The number of markers in each column
-    markerLength = rospy.get_param("aruco_bundles_pose_estimate/marker_length",
+    markerLength = rospy.get_param("aruco_bundles_detection/marker_length",
                                    default=0.04)  # The length of each marker
-    markerSeparation = rospy.get_param("aruco_bundles_pose_estimate/marker_separation",
+    markerSeparation = rospy.get_param("aruco_bundles_detection/marker_separation",
                                        default=0.01)  # The separation between any two markers
-    dictionary = rospy.get_param("aruco_bundles_pose_estimate/aruco_dictionary",
+    dictionary = rospy.get_param("aruco_bundles_detection/aruco_dictionary",
                                  default=cv2.aruco.DICT_4X4_100)  # The marker dictionary
-    camera_info = rospy.get_param("aruco_bundles_pose_estimate/camera_info",
+    camera_info = rospy.get_param("aruco_bundles_detection/camera_info",
                                   default="/camera/color/camera_info")  # The camera_info topic
-    image_topic = rospy.get_param("aruco_bundles_pose_estimate/image_topic",
+    image_topic = rospy.get_param("aruco_bundles_detection/image_topic",
                                   default="/camera/color/image_raw")  # The image topic
     bgrImage = None  # The OpenCV BGR images
     cameraMatrix = None  # The 3X3 camera matrix

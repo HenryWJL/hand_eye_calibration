@@ -20,11 +20,11 @@ def generate_charuco(squares_x, squares_y, square_length, marker_length, aruco_d
 
 if __name__ == '__main__':
     # Parameters
-    squaresX = 4  # The number of squares in each row
-    squaresY = 4  # The number of squares in each column
-    squareLength = 0.04  # The length of each square
-    markerLength = 0.03  # The length of each marker
-    dictionary = "DICT_6X6_250"  # The marker dictionary
+    squaresX = 3  # The number of squares in each row
+    squaresY = 3  # The number of squares in each column
+    squareLength = 0.05  # The length of each square
+    markerLength = 0.04  # The length of each marker
+    dictionary = "DICT_6X6_100"  # The marker dictionary
     """
     Available Dictionaries:
     "DICT_ARUCO_ORIGINAL"

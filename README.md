@@ -18,6 +18,10 @@ Please follow the instructions in the documents while modifying the arguments.
 roslaunch realsense2_camera rs_camera.launch
 ```
 ### Step 4: Start pose estimation
+- Checkerboard
+```bash
+roslaunch hand_eye_calibration checkerboard_start.launch
+```  
 - Single ArUco marker
 ```bash
 roslaunch hand_eye_calibration aruco_single_start.launch
@@ -33,6 +37,10 @@ roslaunch hand_eye_calibration apriltag_single_start.launch
 - AprilTag bundles
 ```bash
 roslaunch hand_eye_calibration apriltag_bundle_start.launch
+```
+- ChArUco
+```bash
+roslaunch hand_eye_calibration charuco_start.launch
 ```
 ### Step 5: Start the robot
 ```bash

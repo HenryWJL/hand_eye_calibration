@@ -1,11 +1,11 @@
 # Hand-Eye Calibration
 
-This package is used for hand-eye calibration. **Intel Realsense D455** camera and **JAKA MiniCobo** robot are required.
+This package is used for hand-eye calibration. **Intel Realsense D455** camera and **JAKA MiniCobo** manipulator are required.
 
-## Usage Instruction
+## Usage
 
 ### Step 1: Print a calibration target
-This package supports a variety of calibration targets, including checkerboard, single ArUco marker, ArUco bundles, single AprilTag marker and AprilTag bundles.
+This package supports a variety of calibration targets, including checkerboard, single ArUco marker, ArUco bundles, single AprilTag marker, AprilTag bundles and ChArUco marker.
 - [Single ArUco marker](https://chev.me/arucogen/) (Dictionary: "Original ArUco")
 - [ArUco bundles](https://github.com/HenryWJL/hand_eye_calibration/blob/main/scripts/generate_aruco_bundles.py)
 - [Single AprilTag marker](https://github.com/AprilRobotics/apriltag-imgs)

@@ -16,7 +16,7 @@ def callback(data):
 
 if __name__ == '__main__':
     rospy.init_node("marker_detection", anonymous=True)
-    rospy.Subscriber('/tf', TFMessage, callback, queue_size=10)
+    rospy.Subscriber('/tf2', TFMessage, callback, queue_size=10)
     estimatedPose = None
     poses = np.random.random((20, 7))
     cnt = 0

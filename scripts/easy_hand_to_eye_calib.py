@@ -31,9 +31,9 @@ def callback(pose):
 
 
 if __name__ == '__main__':
-    # Obtain pose data from topic '/tf'
+    # Obtain pose data from topic '/tf2'
     rospy.init_node('easy_hand_to_eye_calib', anonymous=True)
-    rospy.Subscriber('/tf', TFMessage, callback, queue_size=10)
+    rospy.Subscriber('/tf2', TFMessage, callback, queue_size=10)
     while not rospy.is_shutdown():
         if cam2base is None:
             rospy.logwarn("Waiting for ArUco data...")

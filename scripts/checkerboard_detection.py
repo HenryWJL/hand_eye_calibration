@@ -116,7 +116,7 @@ if __name__ == '__main__':
 
     rospy.Subscriber(camera_info, CameraInfo, camera_info_callback, queue_size=10)
     rospy.Subscriber(image_topic, Image, image_callback, queue_size=10)
-    tf_pub = rospy.Publisher("/tf", TFMessage, queue_size=10)
+    tf_pub = rospy.Publisher("/tf2", TFMessage, queue_size=10)
     image_pub = rospy.Publisher("/checkerboard_detections_image", Image, queue_size=10)
     rate = rospy.Rate(5)
 

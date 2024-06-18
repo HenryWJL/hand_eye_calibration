@@ -44,7 +44,7 @@ def callback(pose):
 
 if __name__ == '__main__':
     rospy.init_node('automatic_hand_to_eye_calib', anonymous=True)
-    rospy.Subscriber('/tf', TFMessage, callback, queue_size=10)
+    rospy.Subscriber('/tf2', TFMessage, callback, queue_size=10)
     robot_ip = rospy.get_param("/robot_ip", default="192.168.200.100")
     # Starting the robot
     robot = jkrc.RC(robot_ip)

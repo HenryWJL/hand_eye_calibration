@@ -54,7 +54,7 @@ def target_pose_callback(pose):
 if __name__ == '__main__':
     rospy.init_node('hand_to_eye_calib', anonymous=True)
     rospy.Subscriber('/robot_driver/tool_point', TwistStamped, end_pose_callback, queue_size=10)
-    rospy.Subscriber('/tf', TFMessage, target_pose_callback, queue_size=10)
+    rospy.Subscriber('/tf2', TFMessage, target_pose_callback, queue_size=10)
     # Variables
     end_pose = None  # The pose of robot's end
     target_pose = None  # The pose of ArUco target
